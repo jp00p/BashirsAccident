@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://tiles_sheet.png" type="Texture" id=1]
+[ext_resource path="res://Platform.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 40.3105, 10.3184 )
+
+[node name="Platform" type="RigidBody2D"]
+collision_mask = 2147483651
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 700, 840, 70, 40 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.53, -9.85676 )
+scale = Vector2( 0.853907, 0.975416 )
+shape = SubResource( 1 )
+one_way_collision = true

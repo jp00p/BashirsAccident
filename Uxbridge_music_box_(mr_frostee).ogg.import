@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Uxbridge_music_box_(mr_frostee).ogg-3dcc3c5373287942bc3f95171bdf7c6d.oggstr"
+
+[deps]
+
+source_file="res://Uxbridge_music_box_(mr_frostee).ogg"
+dest_files=[ "res://.import/Uxbridge_music_box_(mr_frostee).ogg-3dcc3c5373287942bc3f95171bdf7c6d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

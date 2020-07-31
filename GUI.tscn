@@ -1,0 +1,187 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://GUI.gd" type="Script" id=1]
+[ext_resource path="res://TNG_Credits.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Sheriff_Worf_Head.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 14
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_char = 2
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.360784, 0.0313726, 0.0313726, 1 )
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 10
+corner_radius_bottom_right = 10
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 0, 0, 1 )
+corner_radius_top_left = 10
+corner_radius_bottom_right = 10
+corner_detail = 11
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="DynamicFont" id=4]
+size = 18
+outline_size = 2
+outline_color = Color( 0.00784314, 0.00784314, 0.00784314, 1 )
+use_filter = true
+extra_spacing_bottom = 2
+font_data = ExtResource( 2 )
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform bool Smooth = true;
+uniform float width : hint_range(0.0, 16) = 1.0;
+uniform vec4 outline_color : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform int pixel_size : hint_range(1, 10) = 4;
+ 
+void fragment()
+{
+	vec2 unit = (1.0/float(pixel_size) ) / vec2(textureSize(TEXTURE, 0));
+	vec4 pixel_color = texture(TEXTURE, UV);
+	if (pixel_color.a == 0.0) {
+		pixel_color = outline_color;
+		pixel_color.a = 0.0;
+		for (float x = -ceil(width); x <= ceil(width); x++) {
+			for (float y = -ceil(width); y <= ceil(width); y++) {
+				if (texture(TEXTURE, UV + vec2(x*unit.x, y*unit.y)).a == 0.0 || (x==0.0 && y==0.0)) {
+					continue;
+				}
+				if (Smooth) {
+					pixel_color.a += outline_color.a / (pow(x,2)+pow(y,2)) * (1.0-pow(2.0, -width));
+					if (pixel_color.a > 1.0) {
+						pixel_color.a = 1.0;
+					}
+				} else {
+					pixel_color.a = outline_color.a;
+					return
+				}
+			}
+		}
+	}
+	COLOR = pixel_color;
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+shader_param/Smooth = true
+shader_param/width = 5.336
+shader_param/outline_color = Color( 0.984314, 0.984314, 0.984314, 1 )
+shader_param/pixel_size = 1
+
+[sub_resource type="DynamicFont" id=7]
+size = 22
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="GUI" type="MarginContainer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 460.0
+margin_bottom = 49.0
+
+[node name="Bars" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 280.0
+margin_bottom = 29.0
+
+[node name="Bar" type="HBoxContainer" parent="HBoxContainer/Bars"]
+margin_right = 280.0
+margin_bottom = 29.0
+custom_constants/separation = 15
+
+[node name="Label" type="Label" parent="HBoxContainer/Bars/Bar"]
+margin_top = 5.0
+margin_right = 65.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 1 )
+text = "Honor:"
+uppercase = true
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/Bars/Bar"]
+margin_left = 80.0
+margin_right = 280.0
+margin_bottom = 29.0
+rect_min_size = Vector2( 200, 28 )
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+max_value = 1000.0
+step = 0.5
+value = 1000.0
+
+[node name="Counters" type="HBoxContainer" parent="HBoxContainer"]
+margin_left = 284.0
+margin_right = 334.0
+margin_bottom = 29.0
+size_flags_stretch_ratio = 0.33
+
+[node name="LifeCounter" type="MarginContainer" parent="HBoxContainer/Counters"]
+margin_right = 50.0
+margin_bottom = 29.0
+custom_constants/margin_left = 50
+
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/Counters/LifeCounter"]
+margin_left = 50.0
+margin_right = 50.0
+margin_bottom = 29.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Counters/LifeCounter/NinePatchRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Counters/LifeCounter/NinePatchRect/HBoxContainer"]
+material = SubResource( 6 )
+margin_right = 75.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 75, 75 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HBoxContainer/Counters/LifeCounter/NinePatchRect/HBoxContainer"]
+margin_left = 79.0
+margin_top = 22.0
+margin_right = 111.0
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 7 )
+text = "x 3"
+__meta__ = {
+"_edit_use_anchors_": false
+}

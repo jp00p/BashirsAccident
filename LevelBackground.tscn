@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://backgrounds/Quark's_Bar,_Who_Mourns_for_Morn_1.jpg" type="Texture" id=2]
+
+[node name="LevelBackground" type="ParallaxBackground"]
+scroll_ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2( 1, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxLayer"]
+margin_left = -176.0
+margin_right = 624.0
+margin_bottom = 800.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}

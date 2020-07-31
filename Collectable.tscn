@@ -1,0 +1,82 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://tilesheet_complete.png" type="Texture" id=1]
+[ext_resource path="res://Collectable.gd" type="Script" id=2]
+[ext_resource path="res://star_08.png" type="Texture" id=3]
+
+[sub_resource type="Gradient" id=2]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="Curve" id=4]
+min_value = -1.0
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 2.8, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0.00263852, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 0 ), 0.0, 1.4, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+trail_divisor = 2
+trail_size_modifier = SubResource( 9 )
+trail_color_modifier = SubResource( 7 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 50.0
+angular_velocity = 10.0
+angular_velocity_random = 0.25
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 225.0
+linear_accel_random = 1.0
+radial_accel = 50.0
+radial_accel_random = 0.5
+angle = 720.0
+angle_random = 1.0
+scale = 1.25
+scale_random = 1.0
+color_ramp = SubResource( 3 )
+hue_variation = 0.57
+hue_variation_random = 1.0
+hue_variation_curve = SubResource( 5 )
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.7058
+
+[node name="Collectable" type="Area2D"]
+collision_mask = 2
+script = ExtResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+scale = Vector2( 0.025, 0.025 )
+amount = 50
+lifetime = 5.0
+speed_scale = 5.17
+explosiveness = 0.11
+randomness = 0.04
+process_material = SubResource( 10 )
+texture = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 848, 145, 32, 30 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+[connection signal="body_entered" from="." to="." method="_on_Collectable_body_entered"]

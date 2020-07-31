@@ -1,0 +1,128 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://space_background.tscn" type="PackedScene" id=1]
+[ext_resource path="res://backgrounds/thepassenger006.jpg" type="Texture" id=2]
+[ext_resource path="res://backgrounds/thepassenger008.jpg" type="Texture" id=3]
+[ext_resource path="res://TheEnd.gd" type="Script" id=4]
+[ext_resource path="res://TNG_Credits.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://intro_font.tres" type="DynamicFont" id=6]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 0.75
+} ]
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_char = 1
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 24
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 5 )
+
+[node name="TheEnd" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="ParallaxBackground" parent="." instance=ExtResource( 1 )]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 238, 380 )
+frames = SubResource( 1 )
+frame = 1
+playing = true
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 20.0
+margin_top = 682.0
+margin_right = 460.0
+margin_bottom = 696.0
+custom_fonts/font = ExtResource( 6 )
+text = "Thanks for playing!"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="."]
+margin_left = 20.0
+margin_top = 702.0
+margin_right = 460.0
+margin_bottom = 716.0
+custom_fonts/font = ExtResource( 6 )
+text = "Listen to the Greatest Generation podcast!"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 480.0
+margin_bottom = 800.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 460.0
+margin_bottom = 780.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_right = 440.0
+margin_bottom = 43.0
+custom_fonts/font = SubResource( 2 )
+text = "CONGRATULATIONS"
+align = 1
+autowrap = true
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_top = 53.0
+margin_right = 440.0
+margin_bottom = 85.0
+custom_fonts/font = SubResource( 3 )
+text = "You done did it!"
+align = 1
+autowrap = true
+
+[node name="Links" type="CenterContainer" parent="."]
+margin_left = 20.0
+margin_top = 740.0
+margin_right = 460.0
+margin_bottom = 768.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Links"]
+margin_left = 138.0
+margin_right = 301.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 6 )
+text = "Go to their website"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VideoPlayer" type="VideoPlayer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Links/Button" to="." method="_on_Button_pressed"]

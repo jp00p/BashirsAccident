@@ -1,0 +1,151 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Captive_Bashir_Full.png" type="Texture" id=1]
+[ext_resource path="res://space_background.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Title.gd" type="Script" id=3]
+[ext_resource path="res://TNG_Credits.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Security_Chief_Worf.png" type="Texture" id=5]
+[ext_resource path="res://button_style.tres" type="StyleBox" id=6]
+[ext_resource path="res://intro_font.tres" type="DynamicFont" id=7]
+
+[sub_resource type="Shader" id=1]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_char = 2
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=4]
+use_filter = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="Theme" id=5]
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_char = 2
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=7]
+resource_name = "engage"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Captive_Bashir_Full:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, -0.5 ),
+"update": 0,
+"values": [ Vector2( 32, 407 ), Vector2( -136, 407 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Security_Chief_Worf:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, -0.5 ),
+"update": 0,
+"values": [ Vector2( 454, 421 ), Vector2( 614, 421 ) ]
+}
+
+[node name="Title" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="ParallaxBackground" parent="." instance=ExtResource( 2 )]
+
+[node name="Captive_Bashir_Full" type="Sprite" parent="."]
+position = Vector2( 32, 407 )
+scale = Vector2( 0.67, 0.67 )
+texture = ExtResource( 1 )
+
+[node name="Security_Chief_Worf" type="Sprite" parent="."]
+position = Vector2( 454, 421 )
+texture = ExtResource( 5 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 475.0
+margin_bottom = 803.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 44.0
+margin_top = 154.0
+margin_right = 430.0
+margin_bottom = 648.0
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+material = SubResource( 2 )
+margin_right = 386.0
+margin_bottom = 43.0
+custom_fonts/font = SubResource( 3 )
+text = "Bashir's Accident"
+align = 1
+valign = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_top = 47.0
+margin_right = 386.0
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 4 )
+text = "Dishonored and Wet"
+align = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 73.0
+margin_right = 386.0
+margin_bottom = 418.0
+custom_constants/margin_top = 150
+custom_constants/margin_bottom = 150
+
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/VBoxContainer/MarginContainer"]
+margin_top = 150.0
+margin_right = 386.0
+margin_bottom = 195.0
+
+[node name="Button" type="Button" parent="CenterContainer/VBoxContainer/MarginContainer/CenterContainer"]
+margin_left = 125.0
+margin_right = 260.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 135, 45 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = SubResource( 5 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+custom_fonts/font = SubResource( 6 )
+text = "ENGAGE"
+
+[node name="Label3" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_top = 422.0
+margin_right = 386.0
+margin_bottom = 494.0
+custom_fonts/font = ExtResource( 7 )
+text = "A Greatest Generation fan game
+
+A little bit embarassed to be developed by jp00p"
+align = 1
+valign = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/engage = SubResource( 7 )
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/CenterContainer/Button" to="." method="_on_Button_pressed"]
